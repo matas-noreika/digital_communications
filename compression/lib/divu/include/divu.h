@@ -16,10 +16,10 @@ typedef struct{
   uint16_t width; //the width of the current image
   uint16_t height; //the height of the current image
   char padding[124]; //padding to extent header to size of 128 bytes
-}divu_header;
+}divu_header_t;
 
 //type definition of pointer to divu_header
-typedef divu_header *divu_header_ptr;
+typedef divu_header_t *divu_header_ptr;
 
 //Function to read from divu file the contents of the header
 void divu_get_header(char*, divu_header_ptr);

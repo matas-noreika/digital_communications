@@ -13,8 +13,5 @@ _row breaks can be determined using the width variable in the header by dividing
 The divu file outputs are tested using command line tools like hexdump to view binary raw information and ls -l to view byte size of file.
 
 # applications
-## divu.h
-Header API for handling files with divu extension. The API provides functions for compression and decompression. The header also provides type definitions for header information to be easily parsed.
-
 ## whitebox.exe
 The whitebox program generates a file called whitebox.divu that holds the RLE compressed data of a 256x256 whitebox image.

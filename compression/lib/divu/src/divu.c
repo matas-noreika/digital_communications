@@ -3,7 +3,7 @@
  * Purpose: Implementation file of divu API
 */
 
-#incude "divu.h"
+#include "divu.h"
 
 //Function to read from divu file the contents of the header
 void divu_get_header(char *filename, divu_header_ptr){
