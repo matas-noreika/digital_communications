@@ -8,7 +8,7 @@
 int main(int argc, char** argv){//start of main method
   
   //generate a divu file header
-  divu_header header = {
+  divu_header_t header = {
     .width = 256,
     .height = 256
   };

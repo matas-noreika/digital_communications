@@ -6,7 +6,7 @@
 #include "divu.h"
 
 //Function to read from divu file the contents of the header
-void divu_get_header(char *filename, divu_header_ptr){
+void divu_get_header(char *filename, divu_header_ptr header){
   //open file
   //read first 128 bytes into header pointer
   //close file
