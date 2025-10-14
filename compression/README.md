@@ -1,5 +1,6 @@
 # Introduction
 The following application is to showcase the topic of file compression. The following project holds many programs to generate multiple types files in a custom .divu extension and one application to de-compression the files into an image that will be rendered to the standard output stream.
+All executables are compiled using `make`. Additional `make DEBUG=1` will enable debug print messages to the standard output stream.
 # Run length encoding
 Run length encoding (RLE) is a type of compression scheme that is best suited for long runs of identical information. Take the example of an image which is completely white with dimensions 256x256 pixels. If no RLE is used the image data would require 1024 bytes. If RLE is used we can read the image row by row and byte per byte keeping count of the number of similar colour pixels read. In the example all pixels are white therefore the final data would only require 3 bytes: 2 bytes for the value of repeating bytes in this case decimal 1024 and 1 byte for color information 0x00 (assuming white is 0).
 # .divu file standard specifications
@@ -10,8 +11,14 @@ Run length encoding (RLE) is a type of compression scheme that is best suited fo
 _row breaks can be determined using the width variable in the header by dividing the width by 8 and adding a newline feed or similar inside the decompressed data_
 
 # Testing methods
-The divu file outputs are tested using command line tools like hexdump to view binary raw information and ls -l to view byte size of file.
+The divu file outputs are tested using command line tools like `hexdump` to view binary raw information and `ls -l` to view byte size of file.
 
 # applications
 ## whitebox.exe
-The whitebox program generates a file called whitebox.divu that holds the RLE compressed data of a 256x256 whitebox image.
+The whitebox program generates a file called whitebox.divu in data/output directory that holds the RLE compressed data of a 256x256 whitebox image. whitebox.exe reads the raw binary data from data/raw/whitebox.bin which can be generate using the following command:
+````
+```
+chmod +x scripts/generateAllRawData.bash
+./scripts/generateAllRawData.bash
+```
+

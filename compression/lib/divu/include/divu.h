@@ -8,9 +8,9 @@
 #define __DIVU_H__
 
 #include <stdio.h>//libc i/o header
+#include <stdlib.h>
 #include <stdint.h>//libc integer type header
 
-//#pragma pack(1)
 //type definition of divu header
 typedef struct{
   uint16_t width; //the width of the current image
@@ -21,14 +21,17 @@ typedef struct{
 //type definition of pointer to divu_header
 typedef divu_header_t *divu_header_ptr;
 
+//Helper function to print image data 2D matrix
+void divu_print_image_data(uint8_t **image_data, uint16_t width, uint16_t height);
+
 //Function to read from divu file the contents of the header
-void divu_get_header(char*, divu_header_ptr);
+void divu_get_header(uint8_t *filename, divu_header_ptr header);
 
 //Function to compress data using RLE
-char* divu_compress_data(char **);
+void divu_compress_data(uint8_t **image_data, uint8_t **compressed_data,uint16_t width, uint16_t height, size_t *arraySize);
 
 //Function to decompress data from RLE compression
-char** divu_decompress_data(char*);
+void divu_decompress_data(uint8_t *compressed_data, uint8_t *image_data,uint16_t width, uint16_t height);
 
 #endif
 //end of header guard

@@ -1,7 +1,14 @@
 #C Compiler
 CC= gcc
+DEBUG=
 #C Compiler Flags
+ifeq ($(DEBUG),)
 CCFLAGS= -I./include $(LIBINCS)
+else
+CCFLAGS= -g -D DEBUG -I./include $(LIBINCS)
+DEBUGPASS=DEBUG=1
+endif
+
 #Linker Dependency Flags
 LDFLAGS= $(LDLIBS) $(LIBS)
 
@@ -37,14 +44,14 @@ clean:
 	-@rm -f $(LOCALBIN)/*.exe 2> /dev/null
 	-@rm -f $(LOCALOBJ)/*.o 2> /dev/null
 	-@rm -f $(LOCALDEP)/*.d 2> /dev/null
-	-@rm -f *.divu 2> /dev/null
+	-@rm -f ./data/output/*.divu 2> /dev/null
 	-@rm -f $(LOCALBIN)/*.divu 2> /dev/null
-
+	for lib in $(LIBDIRS); do $(MAKE) -C $$lib clean; done
 #include the Dependency chain for each source file
 -include $(DEPS)
 
 BUILDLIBS: $(LIBDIRS)
-	$(MAKE) -C $<
+	$(MAKE) -C $< $(DEBUGPASS)
 
 #static pattern rule to generate .o files from .c files
 $(LOCALOBJ)/%.o: $(LOCALSRC)/%.c
@@ -53,4 +60,4 @@ $(LOCALOBJ)/%.o: $(LOCALSRC)/%.c
 
 #static pattern rule to generate .exe files from .o files
 $(LOCALBIN)/%.exe: $(LOCALOBJ)/%.o
-	$(CC) $(CCFLAGS) $(LDFLAGS) $< -o $@
+	$(CC) $(CCFLAGS) -o $@ $< $(LDFLAGS)

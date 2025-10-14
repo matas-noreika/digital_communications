@@ -1,7 +1,12 @@
 #C Compiler
 CC= gcc
+DEBUG=
+ifeq ($(DEBUG),)
 #C Compiler Flags
 CCFLAGS= -I./include/
+else
+CCFLAGS= -g -D DEBUG -I./include/
+endif
 #Linker Dependency Flags
 LDFLAGS= 
 
