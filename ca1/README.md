@@ -13,10 +13,11 @@ The application to encode the text data *.txt into (RLE) *.rle file format may a
 * File input
 * Stream (stdin)
 * Command line arguments (argv)
-* Hardcoded static variable #define char\[256\]
+* Hard-coded static variable #define char\[256\]
 
 The application must perform some data analysis on the input data. Examples:
 * most frequent character
 * least frequent character
 * compression ratio
 
+The final output will be stored within `data/output` directory.
