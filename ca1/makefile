@@ -3,7 +3,7 @@ CC=gcc
 #debug flag to enable/disable stdout prints
 DEBUG=
 #C Compiler flags
-ifeq (DEBUG,)
+ifeq ($(DEBUG), )
 CCFLAGS=-O2 -I./include
 else	
 CCFLAGS=-g -D DEBUG -O2 -I./include
