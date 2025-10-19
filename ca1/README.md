@@ -4,12 +4,14 @@ The following directory holds an application to encode data using Run Length Enc
 * Input data is to be provided in text format only using alpha characters \[a-Z\]
 * The format of the output file will include a sequence of entries with a unsigned char referring to which character is repeated, followed by a unsigned integer value indication the count of repetitions. Example:
 
-<center>
+<div align="center">
 
 |uchar|uint|
 |-----|-----|
 |0x61|0x00000020|
 |a|32|
+
+</div>
 # application specifications
 The application to encode the text data *.txt into (RLE) *.rle file format may accept one or more of the following input options:
 * File input
