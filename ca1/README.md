@@ -6,7 +6,7 @@ The following directory holds an application to encode data using Run Length Enc
 
 |uchar|uint|
 |-----|-----|
-|0x61|0x0020|
+|0x61|0x00000020|
 |a|32|
 # application specifications
 The application to encode the text data *.txt into (RLE) *.rle file format may accept one or more of the following input options:
