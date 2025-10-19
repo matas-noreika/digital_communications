@@ -3,9 +3,7 @@
  * Purpose: Application to take input in the format of text via (file, stdin, command line arguments) and output RLE encoded format .rle file
 */
 
-#include <stdio.h>
-
-void rle_encode_file(char *filename,char *rle_filename);
+#include "ca1.h"
 
 int main(int argc, char** argv){//start of main method
   
@@ -14,8 +12,8 @@ int main(int argc, char** argv){//start of main method
 
   //the description of how to use application
   char description[] = "The program accepts the following argument flags:\n"
-                       "-f -> read from file, argument followed by path/filename output_path/filename,\n"
-                       "-s -> Read from stdin";
+                       "-f -> read from file, argument followed by path/filename.txt output_path/filename.rle,\n"
+                       "-s -> Read from stdin, argument followed by output_path/filename.rle";
 
   //check if no arguments were supplied
   if (argc -1 <= 0){
@@ -32,17 +30,20 @@ int main(int argc, char** argv){//start of main method
     printf("%s\n", description);
     return 1;
   }
+  
+  //check if at least two arguments are passed
+  if(argc-1 < 2){
+        printf("filename not provided!\n");
+        printf("%s\n", description);
+        return 1;
+  }
 
   //switch case for read input operation
   switch (flag[1]){
     case 'f': //reading from file
       
       //invariant check on filename
-      if(argc-1 < 2){
-        printf("filename not provided!\n");
-        printf("%s\n", description);
-        return 1;
-      }else if (argc-1 < 3) {
+      if (argc-1 < 3) {
         printf("output_path not provided\n");
         printf("%s\n", description);
         return 1;
@@ -53,7 +54,7 @@ int main(int argc, char** argv){//start of main method
       break;
 
     case 's': // reading from stdin (stream)
-      
+      rle_encode_stream(argv[2]);
       break;
     
     default: //invalid flag format or flag
@@ -63,6 +64,85 @@ int main(int argc, char** argv){//start of main method
 
   return 0;
 }//end of main method
+
+void rle_encode_stream(char *rle_filename){
+  
+  #ifdef DEBUG
+    printf("rle filename: %s\n", rle_filename);
+  #endif
+
+  //open file or create
+  FILE *rlefile_ptr = fopen(rle_filename, "w+");
+  
+  //failed to open file
+  if(rlefile_ptr == NULL){
+    fprintf(stderr,"Failed to open rle file!\n");
+    return;
+  }
+
+  char current_char;
+  char next_char;
+  unsigned int count = 1;
+
+  //read the first char to referance against
+  read(0,&current_char, 1);
+
+  while(read(0, &next_char, 1)){//start of read loop
+     
+    //character changed write [char, count], then reset
+    if(current_char != next_char){
+      
+      //write the character
+      fwrite(&current_char, sizeof(char), 1, rlefile_ptr);
+      //write the count
+      fwrite(&count, sizeof(int), 1, rlefile_ptr);
+
+      #ifdef DEBUG
+        printf("Writing: %c %d\n",current_char, count);
+      #endif
+
+      //reset the counter and current character
+      current_char = next_char;
+      count = 1;
+      continue;
+    }
+    
+    //overflow happended
+    if (!(count + 1)){
+      //write the character
+      fwrite(&current_char, sizeof(char), 1, rlefile_ptr);
+      //write the count
+      fwrite(&count, sizeof(int), 1, rlefile_ptr);
+
+      #ifdef DEBUG
+        printf("Writing: %c %u\n",current_char, count);
+      #endif
+
+      count = 1;
+      continue;
+    }
+
+    //incrament count
+    count++;
+  
+  }//end of read loop
+  
+  //write the character
+  fwrite(&current_char, sizeof(char), 1, rlefile_ptr);
+  //write the count
+  fwrite(&count, sizeof(int), 1, rlefile_ptr);
+
+  #ifdef DEBUG
+    printf("Writing: %c %u\n",current_char, count);
+  #endif
+ 
+  fclose(rlefile_ptr);
+
+  #ifdef DEBUG
+    printf("Successfully added data to rle file\n");
+  #endif
+
+}
 
 //function to encode a text file into rle encoded .rle file
 //will use relative path to the directory of execution to store file
