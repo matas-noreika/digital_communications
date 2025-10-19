@@ -4,6 +4,8 @@ The following directory holds an application to encode data using Run Length Enc
 * Input data is to be provided in text format only using alpha characters \[a-Z\]
 * The format of the output file will include a sequence of entries with a unsigned char referring to which character is repeated, followed by a unsigned integer value indication the count of repetitions. Example:
 
+<center>
+
 |uchar|uint|
 |-----|-----|
 |0x61|0x00000020|
