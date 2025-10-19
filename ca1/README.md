@@ -36,6 +36,7 @@ chmod +x scripts/generateData.bash # gives execution permissions
 ```
 
 Now if you list the data/raw directory you should see:
+```
 
 data/
   |
@@ -48,7 +49,7 @@ data/
   |--output/
   |   |
   |   
-
+```
 ## How to compile executable
 To compile `ca1.c` into `bin/ca1.exe` ensure you are in ca1 directory and ensure you have gnu make installed on your system. Just call make and the makefile will handle all the process. To generate a specific file ensure you append the `bin/%.exe` where % is the target source c filename you wish to compile.
 ## file input example
