@@ -12,6 +12,7 @@ The following directory holds an application to encode data using Run Length Enc
 |a|32|
 
 </div>
+
 # application specifications
 The application to encode the text data *.txt into (RLE) *.rle file format may accept one or more of the following input options:
 * File input
