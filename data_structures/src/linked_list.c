@@ -1,43 +1,10 @@
 /*
  * Programmer: Matas Noreika 2025-10-23 14:57
- * Purpose: Implementation of linked list abstract data type
+ * Purpose: Implementation of linked list data structure
  * All functions and data types are prefixed with ll_
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-//type defintions
-//type definition of node type for linked list
-typedef struct ll_node{
-  int data; //data information of node
-  struct ll_node *next; //pointer to next node
-}ll_node_t;
-
-//function prototypes
-ll_node_t *ll_create(int data);
-void ll_delete(ll_node_t *head);
-void ll_print_list(ll_node_t *head);
-int ll_end_insert(ll_node_t *head, int data);
-
-int main(int argc, char** argv){ //start of main method
-
-  ll_node_t *node_head = ll_create(10);
-  ll_end_insert(node_head, 12);
-  ll_end_insert(node_head, 24);
-  ll_end_insert(node_head, 56);
-  ll_end_insert(node_head, 180);
-
-  //print out our current list
-  ll_print_list(node_head);
-  
-  //free up memory in heap used by linked list
-  ll_delete(node_head);
-  
-  printf("Successfully freed linked list memory\n");
-
-  return 0;
-} //end of main method
+#include "linked_list.h"
 
 void ll_print_list(ll_node_t *head){
   ll_node_t *current_node = head;
@@ -51,7 +18,6 @@ void ll_print_list(ll_node_t *head){
   printf("End\n");
 }
 
-//function defintions
 ll_node_t *ll_create(int data){
   ll_node_t *node_ptr = (ll_node_t *) malloc(sizeof(ll_node_t));
   node_ptr->data = data;
@@ -87,6 +53,17 @@ int ll_end_insert(ll_node_t *head, int data){
 
   return 0;
 
+}
+
+ll_node_t *ll_start_insert(ll_node_t *head, int data){
+  ll_node_t *new_head = ll_create(data);
+  
+  //if we sucessful created a new node
+  if(new_head != NULL){
+    new_head->next = head;
+  }
+
+  return new_head;
 }
 
 void ll_delete(ll_node_t *head){

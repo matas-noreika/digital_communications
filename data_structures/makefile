@@ -1,7 +1,7 @@
 #C Complier
 CC= gcc
 #C Complier Flags
-CCFLAGS=
+CCFLAGS=-I./include
 
 #Local Directories
 LOCALSRC=./src
@@ -13,7 +13,7 @@ LOCALDEP=./dep
 SRCS=$(wildcard $(LOCALSRC)/*.c)
 OBJS=$(SRCS:$(LOCALSRC)/%.c=$(LOCALOBJ)/%.o)
 DEPS=$(SRCS:$(LOCALSRC)/%.c=$(LOCALOBJ)/%.d)
-EXES=$(SRCS:$(LOCALSRC)/%.c=$(LOCALBIN)/%.exe)
+EXES=$(LOCALBIN)/application.exe
 
 #rules that do not require prequisites to be updated
 .PHONY:all clean build
@@ -42,5 +42,5 @@ $(LOCALOBJ)/%.o: $(LOCALSRC)/%.c
 	mv $(LOCALOBJ)/$(*F).d $(LOCALDEP)
 
 #static pattern rule to generate executables from object files
-$(LOCALBIN)/%.exe: $(LOCALOBJ)/%.o
-	$(CC) $(CCFLAGS) $< -o $@
+$(LOCALBIN)/%.exe: $(OBJS)
+	$(CC) $(CCFLAGS) $(OBJS) -o $@
