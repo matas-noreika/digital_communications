@@ -34,10 +34,13 @@ Function to create a new node with data and set its next pointer to previous hea
 Function to insert new node with data at the end of the linked list.
 ### Data Types
 #### `ll_node_t`
-<center>Data Members</center>
+<center>
+
+Data Members
 
 |type|name|description|
 |----|----|-----------|
 |int|data|Data stored at node|
 |ll_node_t *|next|Pointer to next node|
 
+</center>
