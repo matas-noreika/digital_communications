@@ -83,12 +83,16 @@ void rle_encode_stream(char *rle_filename){
   char current_char;
   char next_char;
   unsigned int count = 1;
+  size_t read_size = 0;
 
   //read the first char to referance against
-  read(0,&current_char, 1);
+  read_size += read(0,&current_char, 1);
 
   while(read(0, &next_char, 1)){//start of read loop
-     
+    
+    //incrament the input size variable
+    read_size++;
+    
     //character changed write [char, count], then reset
     if(current_char != next_char){
       
@@ -135,7 +139,10 @@ void rle_encode_stream(char *rle_filename){
   #ifdef DEBUG
     printf("Writing: %c %u\n",current_char, count);
   #endif
- 
+  
+  //print out the compression ratio
+  printf("Compression Ratio:%.2f\n", (double) read_size/ftell(rlefile_ptr));
+
   fclose(rlefile_ptr);
 
   #ifdef DEBUG
@@ -230,7 +237,8 @@ void rle_encode_file(char *filename, char *rle_filename){
   #ifdef DEBUG
     printf("Writing: %c %u\n",current_char, count);
   #endif
- 
+  
+  printf("Compression Ratio: %.2f\n", (double) ftell(txtfile_ptr)/ftell(rlefile_ptr));
 
   //close files
   fclose(txtfile_ptr);
